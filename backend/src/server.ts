@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import connectDB from "./config/mongoConfig";
 import errorMiddleware from './middleware/error'
 import authRouter from './routes/authRoute'
@@ -23,6 +24,7 @@ const PORT = process.env.PORT || 3000;
 
 connectDB();
 app.use(express.json());
+app.use(cookieParser())
 
 // routes -->
 app.get('/',(req:Request, res:Response)=>{
