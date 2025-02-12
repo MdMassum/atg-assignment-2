@@ -29,8 +29,9 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
       user,
     });
 
-  } catch (error) {
-    next(new ErrorHandler("Internal server error", 500));
+  } catch (error:any) {
+    console.log(error);
+    next(new ErrorHandler(error.message || "Internal server error", 500));
   }
 };
 
@@ -71,13 +72,13 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       token,
     });
 
-  } catch (error) {
-    next(new ErrorHandler("Internal server error", 500));
+  } catch (error:any) {
+    next(new ErrorHandler(error.message || "Internal server error", 500));
   }
 };
 
 // user logout
-export const logout = async (req: Request, res: Response) => {
+export const logout = async (req: Request, res: Response, next:NextFunction) => {
 
   try {
       // Clear the token cookie
@@ -89,8 +90,8 @@ export const logout = async (req: Request, res: Response) => {
     
       res.status(200).json({success:true,message:"Logout Successfully"});
 
-  } catch (error) {
-    res.status(500).json({success:false, message: 'Internal server error' })
+  } catch (error:any) {
+    next(new ErrorHandler(error.message || "Internal server error", 500));
   }
 };
 
@@ -135,8 +136,8 @@ export const forgotPassword = async (req: Request, res: Response, next: NextFunc
         return(next(new ErrorHandler(error.message,500)))
     }
 
-  } catch (error) {
-    next(new ErrorHandler("Internal server error", 500));
+  } catch (error:any) {
+    next(new ErrorHandler(error.message || "Internal server error", 500));
   }
 };
 
@@ -172,7 +173,7 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
       message: "Password reset successful",
     });
 
-  } catch (error) {
-    next(new ErrorHandler("Internal server error", 500));
+  } catch (error:any) {
+    next(new ErrorHandler(error.message || "Internal server error", 500));
   }
 };

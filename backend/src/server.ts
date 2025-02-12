@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/mongoConfig";
 import errorMiddleware from './middleware/error'
 import authRouter from './routes/authRoute'
+import postRouter from './routes/postRoutes'
 
 
 // handling uncaught exception
@@ -22,7 +23,6 @@ const PORT = process.env.PORT || 3000;
 
 connectDB();
 app.use(express.json());
-app.use(errorMiddleware)  // error middleware
 
 // routes -->
 app.get('/',(req:Request, res:Response)=>{
@@ -31,6 +31,9 @@ app.get('/',(req:Request, res:Response)=>{
     })
 })
 app.use('/api/auth',authRouter)
+app.use('/api/posts',postRouter)
+
+app.use(errorMiddleware)  // error middleware
 
 // server
 const server = app.listen(PORT, () => {

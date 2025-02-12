@@ -1,13 +1,14 @@
 import { Response, NextFunction } from "express";
 import { verifyToken } from "../utils/auth";
 import { AuthenticatedRequest } from "../types/express";
+import ErrorHandler from "../utils/errorHandler";
 
-export const authenticate = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+const authenticate = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
 
   const token = req.cookies?.token;
+
   if (!token) {
-    res.status(401).json({ message: "Access denied, Please Login First !!" });
-    return;
+    return next(new ErrorHandler("Access denied, Please Login First !!",401));
   }
 
   try {
@@ -17,6 +18,8 @@ export const authenticate = (req: AuthenticatedRequest, res: Response, next: Nex
     next();
     
   } catch (err) {
-    res.status(401).json({ message: "Invalid token" });
+    return next(new ErrorHandler("Invalid token",401));
   }
 };
+
+export default authenticate
