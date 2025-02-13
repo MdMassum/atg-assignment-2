@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
+import cors from 'cors'
 import cookieParser from "cookie-parser";
 import connectDB from "./config/mongoConfig";
 import errorMiddleware from './middleware/error'
@@ -25,6 +26,18 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 app.use(express.json());
 app.use(cookieParser())
+app.use(cors({
+    origin:'http://localhost:5173',
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Cache-Control",
+        "Expires",
+        "Pragma",
+      ],
+    credentials: true
+}))
 
 // routes -->
 app.get('/',(req:Request, res:Response)=>{
