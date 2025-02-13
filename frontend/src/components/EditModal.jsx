@@ -24,7 +24,7 @@ function EditModal({ id, setIsOpen, setPosts, posts }) {
       const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/posts/${id}`, {
         title,
         content,
-      });
+      },{withCredentials:true});
 
       setPosts(posts.map((post) => (post._id === id ? response.data.post : post)));
       setIsOpen(false);
