@@ -3,20 +3,32 @@ import axios from "axios";
 import logo from "../assets/logo.png";
 import { IoIosSearch } from "react-icons/io";
 import {useNavigate} from 'react-router-dom'
+import { signOutFailure, signOutStart, signOutSuccess } from '../redux/user/userSlice';
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
     setLoading(true);
     try {
-      await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/logout`, {}, { withCredentials: true });
-      // Redirect or update UI after successful logout
+      dispatch(signOutStart())
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/logout`, {}, { withCredentials: true });
+      
+      if(response.success === false){
+        dispatch(signOutFailure(resp.message))
+        return;
+      }
+      dispatch(signOutSuccess());
       console.log("Logout successful");
-      navigate('/');
+      navigate('/')
+
     } catch (error) {
       console.error("Logout failed", error.response?.data || error.message);
+      dispatch(signOutFailure(error.message))
     } finally {
       setLoading(false);
     }

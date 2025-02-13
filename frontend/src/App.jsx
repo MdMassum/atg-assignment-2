@@ -4,6 +4,7 @@ import Signup from "./pages/signup-page/Signup";
 import Home from "./pages/home-page/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 
 function Layout() {
   const location = useLocation();
@@ -15,7 +16,12 @@ function Layout() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={<Home />} />
+
+        {/* private route */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/home" element={<Home />} />
+        </Route>
+
       </Routes>
       {showHeaderFooter && <Footer />}
     </>

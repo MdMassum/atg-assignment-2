@@ -7,7 +7,8 @@ export const createPost = async (title: string, content: string, author: Types.O
 };
 
 export const getPosts = async (): Promise<IPost[]> => {
-    return await Post.find().populate('author', 'username email').populate('likes', 'username').sort({ createdAt: -1 });
+    return await Post.find().populate('author', 'username email').sort({ createdAt: -1 });
+    // .populate('likes', 'username')
 };
 
 export const getPostById = async (postId: string): Promise<IPost | null> => {

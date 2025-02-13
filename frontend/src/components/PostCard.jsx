@@ -1,21 +1,35 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaTrash, FaThumbsUp, FaComment, FaEdit } from "react-icons/fa";
 import EditModal from "./EditModal";
 
-export default function PostCard({ id, author, comments, likes, title, content, onDelete, setPosts, posts }) {
+export default function PostCard({ id, author, comments, likes, title, content, onDelete, setPosts, posts, userId }) {
+
   const [localLikes, setLocalLikes] = useState(likes.length);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(likes.some((like) => like === userId));
   const [commentText, setCommentText] = useState("");
   const [localComments, setLocalComments] = useState(comments);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Handle Like Button Click
-  const handleLike = () => {
-    setLocalLikes((prev) => (liked ? Math.max(prev - 1, 0) : prev + 1));
-    setLiked(!liked);
+  // Handle Like & Unlike
+  const handleLikeToggle = async () => {
+    const url = liked
+      ? `${import.meta.env.VITE_BASE_URL}/posts/unlike/${id}`
+      : `${import.meta.env.VITE_BASE_URL}/posts/like/${id}`;
+      console.log(url)
+
+    try {
+      // const response = await axios.post(url, {}, { withCredentials: true });
+
+      setLocalLikes((prev) => (liked ? Math.max(prev - 1, 0) : prev + 1));
+      setLiked(!liked);
+
+    } catch (error) {
+      console.error("Error liking/unliking post:", error);
+    }
   };
 
   // Handle Add Comment API Request
@@ -67,7 +81,7 @@ export default function PostCard({ id, author, comments, likes, title, content, 
       <div className="flex items-center justify-between mt-4">
         <div className="flex items-center gap-4">
           <button
-            onClick={handleLike}
+            onClick={handleLikeToggle}
             className={`flex items-center gap-1 px-3 py-1 rounded-lg transition ${
               liked ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
             }`}
@@ -114,7 +128,6 @@ export default function PostCard({ id, author, comments, likes, title, content, 
                 {new Date(c.createdAt).toLocaleString()}
               </span>
               </div>
-              
             </li>
           ))}
         </ul>
@@ -122,3 +135,4 @@ export default function PostCard({ id, author, comments, likes, title, content, 
     </div>
   );
 }
+

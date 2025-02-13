@@ -13,7 +13,9 @@ function home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/posts`, {}, { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/posts`,{},{
+          withCredentials: true
+        });        
         setPosts(response.data.posts);
         console.log(response.data.posts)
       } catch (error) {

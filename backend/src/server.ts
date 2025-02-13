@@ -39,6 +39,7 @@ app.use(cors({
     credentials: true
 }))
 
+
 // routes -->
 app.get('/',(req:Request, res:Response)=>{
     res.json({

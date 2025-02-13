@@ -1,13 +1,12 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 
-const User = {
-  username:"Md Massum",
-  email : "dkfjld@gmail.com"
-}
 function ProfileSection() {
+  const {currentUser} = useSelector((state)=>state.user);
   return (
-    <div className='hidden md:flex md:w-[35%] text-black pl-3 '>
-      <h1 className='mt-5 w-full mx-auto'>Hi, {User.username}</h1>
+    <div className='hidden md:flex flex-col md:w-[35%] text-black pl-3 '>
+      <h1 className='mt-5 w-full mx-auto'>Hi, {currentUser.username}</h1>
+      <p>Welcome to atg-assignment Post and comment task</p>
     </div>
   )
 }
