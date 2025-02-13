@@ -28,7 +28,7 @@ const Login = () => {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, {
         username,
         password,
-      });
+      },{withCredentials:true});
       if(response.data.success === false){
         dispatch(signInFailure(response.data.message))
         return;
