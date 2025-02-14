@@ -13,6 +13,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
+  const [msg, setmsg] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const Login = () => {
   
     setLoading(true);
     setError(null);
+    setmsg(null);
   
     try {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/forgot-password`, {
@@ -61,6 +63,7 @@ const Login = () => {
       });
   
       console.log("Forgot Password Success:", response.data);
+      setmsg("Password reset link sent to your email.");
       alert("Password reset link sent to your email.");
     } catch (err) {
       console.error("Forgot Password Error:", err.response?.data || err.message);
@@ -76,6 +79,7 @@ const Login = () => {
         {isLogin ? <div className="w-full md:w-1/2">
           <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Login</h2>
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {msg && <p className="text-green-500 text-sm text-center">{msg}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">Username</label>

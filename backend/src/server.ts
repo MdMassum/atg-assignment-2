@@ -27,8 +27,8 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-    // origin:'http://localhost:5173',
-    origin:'https://atg-assignment-2-inky.vercel.app',
+    origin:'http://localhost:5173',
+    // origin:'https://atg-assignment-2-inky.vercel.app',
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
         "Content-Type",

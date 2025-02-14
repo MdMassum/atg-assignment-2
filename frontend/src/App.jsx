@@ -5,6 +5,7 @@ import Home from "./pages/home-page/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import ResetPassword from "./components/ResetPassword";
 
 function Layout() {
   const location = useLocation();
@@ -16,6 +17,7 @@ function Layout() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
 
         {/* private route */}
         <Route element={<PrivateRoute />}>

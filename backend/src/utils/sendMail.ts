@@ -7,12 +7,12 @@ type MailOptions = {
 };
 
 const sendMail = async (options: MailOptions): Promise<void> => {
-    const host: string | undefined = process.env.SMPT_HOST;
-    const port: number | undefined = process.env.SMPT_PORT ? parseInt(process.env.SMPT_PORT) : undefined;
+    // const host: string | undefined = process.env.SMPT_HOST;
+    // const port: number | undefined = process.env.SMPT_PORT ? parseInt(process.env.SMPT_PORT) : undefined;
 
-    if (!host || !port) {
-        throw new Error("SMTP host or port is not defined in environment variables");
-    }
+    // if (!host || !port) {
+    //     throw new Error("SMTP host or port is not defined in environment variables");
+    // }
 
     const transporter = nodemailer.createTransport({
         service: process.env.SMPT_SERVICE,

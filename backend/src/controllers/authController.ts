@@ -115,7 +115,7 @@ export const forgotPassword = async (req: Request, res: Response, next: NextFunc
     user.resetPasswordExpire = new Date (Date.now() + 3600000); // 1 hour
     await user.save();
 
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
+    const resetPasswordUrl = `https://atg-assignment-2-inky.vercel.app/reset-password/${resetToken}`;
 
     const message = `Your Password reset token is :\n ${resetPasswordUrl}\n\nIf you have not requested this email please ignore it !!`
 
