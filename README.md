@@ -114,14 +114,17 @@ atg-assignment-2/frontend
     │-- README.md
 ```
 ## Technologies Used
+- Express.js 
+- Node.js 
 - React.js
 - React Router
 - TailwindCSS
 - Redux
+- Mongodb
 
 ## Links
 
 - Frontend Link : `https://atg-assignment-2-inky.vercel.app/`
 - Backend Link : `https://atg-assignment-2-backend.vercel.app/`
-- Video Link : ``
+- Video Link : `https://drive.google.com/file/d/1Zm-O_rFRUTJ6uKs-_6QwaHwliPsQUGMP/view?usp=drivesdk`
 
