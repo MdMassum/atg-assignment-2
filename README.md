@@ -2,7 +2,7 @@
 # ATG Post-Comment Assignment
 
 ## Overview
-This is a Full Stack(Mern) application designed to manage posts, comments, and user authentication. It is built using React for frontend Express and Nodejs for Backend, Mongodb for database and other essential libraries to enhance performance and functionality.
+This is a Full Stack(Mern) application designed to manage posts, comments, and user authentication. It is built using React for frontend, Express and Nodejs for Backend(Typescript), Mongodb for database and other essential libraries to enhance performance and functionality.
 
 
 ## Installation
@@ -127,4 +127,5 @@ atg-assignment-2/frontend
 - Frontend Link : `https://atg-assignment-2-inky.vercel.app/`
 - Backend Link : `https://atg-assignment-2-backend.vercel.app/`
 - Video Link : `https://drive.google.com/file/d/1Zm-O_rFRUTJ6uKs-_6QwaHwliPsQUGMP/view?usp=drivesdk`
+- Postman Link : `https://assignment-7873.postman.co/workspace/Assignment-Workspace~b4804b6c-c9aa-4dc8-9ecc-51d60bf895cc/collection/35181588-112e9ff3-55c7-4b28-9603-b1784840cfcd?action=share&creator=35181588`
 
