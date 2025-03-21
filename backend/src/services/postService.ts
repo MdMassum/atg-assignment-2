@@ -1,8 +1,8 @@
 import Post, { IPost, IComment } from '../models/postModel';
 import { Types } from 'mongoose';
 
-export const createPost = async (title: string, content: string, author: Types.ObjectId): Promise<IPost> => {
-    const post = new Post({ title, content, author });
+export const createPost = async (title: string, content: string, images:string[], author: Types.ObjectId): Promise<IPost> => {
+    const post = new Post({ title, content, images, author });
     return await post.save();
 };
 

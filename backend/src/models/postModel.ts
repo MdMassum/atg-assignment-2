@@ -9,6 +9,7 @@ export interface IComment extends Document {
 export interface IPost extends Document {
     title: string;
     content: string;
+    images:string[];
     author: Types.ObjectId; // Reference to User model
     likes: Types.ObjectId[]; // Array of User references
     comments: IComment[];
@@ -25,6 +26,7 @@ const CommentSchema: Schema = new Schema({
 const PostSchema: Schema = new Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
+    images:[{type:String}],
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to User
     likes: [{ type: Schema.Types.ObjectId, ref: 'User' }], // Array of User references
     comments: [CommentSchema]

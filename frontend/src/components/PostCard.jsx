@@ -4,7 +4,7 @@ import axios from "axios";
 import { FaTrash, FaThumbsUp, FaComment, FaEdit } from "react-icons/fa";
 import EditModal from "./EditModal";
 
-export default function PostCard({ id, author, comments, likes, title, content, onDelete, setPosts, posts, userId }) {
+export default function PostCard({ id, author, comments,images, likes, title, content, onDelete, setPosts, posts, userId }) {
 
   const [localLikes, setLocalLikes] = useState(likes.length);
   const [liked, setLiked] = useState(likes.some((like) => like === userId));
@@ -57,6 +57,7 @@ export default function PostCard({ id, author, comments, likes, title, content, 
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-4 w-80 md:w-96 border border-gray-200">
+      <img src={images[0]} alt="" />
       {/* Title and Actions */}
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">{title}</h2>

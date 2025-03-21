@@ -1,11 +1,13 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
+dotenv.config();
 import cors from 'cors'
 import cookieParser from "cookie-parser";
 import connectDB from "./config/mongoConfig";
 import errorMiddleware from './middleware/error'
 import authRouter from './routes/authRoute'
 import postRouter from './routes/postRoutes'
+
 
 
 // handling uncaught exception
@@ -18,7 +20,7 @@ process.on("uncaughtException",(err:any)=>{
     })
 })
 
-dotenv.config();
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,8 +29,8 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-    // origin:'http://localhost:5173',
-    origin:'https://atg-assignment-2-inky.vercel.app',
+    origin:'http://localhost:5173',
+    // origin:'https://atg-assignment-2-inky.vercel.app',
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
         "Content-Type",

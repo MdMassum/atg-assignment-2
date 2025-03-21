@@ -3,17 +3,21 @@ import * as postService from '../services/postService';
 import { Types } from 'mongoose';
 import ErrorHandler from '../utils/errorHandler';
 import { AuthenticatedRequest } from '../types/express';
+import cloudinary from '../config/cloudinary';
 
 // create post -->
 export const createPost = async (req: AuthenticatedRequest, res: Response, next:NextFunction) => {
 
     try {
         const { title, content } = req.body;
+        const images: string[] = req.files ? (req.files as Express.Multer.File[]).map((file) => file.path) : [];
+
+
         if(!title || !content){
             return next(new ErrorHandler("Title or Content cannot be empty!",400));
         }
         const author = new Types.ObjectId(req.userId);
-        const post = await postService.createPost(title, content, author);
+        const post = await postService.createPost(title, content, images, author);
 
         res.status(201).json({success:true,post});
     } catch (error:any) {
@@ -65,18 +69,36 @@ export const updatePost = async (req: AuthenticatedRequest, res: Response, next:
 };
 
 
-// delete a post-->
-export const deletePost = async (req: AuthenticatedRequest, res: Response, next:NextFunction) => {
-
+// Delete a post
+export const deletePost = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
         const post = await postService.deletePost(req.params.id);
 
-        if (!post){
-            return next(new ErrorHandler("Post not found",404));
+        if (!post) {
+            return next(new ErrorHandler("Post not found", 404));
         }
-        res.status(200).json({success:true, message: 'Post deleted successfully' });
 
-    } catch (error:any) {
+        if (Array.isArray(post.images) && post.images.length > 0) {
+            const deletePromises = post.images.map(async (imageUrl: string) => {
+                try {
+                    // Extracting public_id correctly from Cloudinary URL
+                    const publicId = imageUrl
+                        .split("/")
+                        .slice(-1)[0] // Get the last segment
+                        .split(".")[0]; // Remove file extension
+
+                    await cloudinary.uploader.destroy(`social_media_task/${publicId}`);
+                } catch (error) {
+                    console.error("Error deleting image from Cloudinary:", error);
+                }
+            });
+
+            await Promise.all(deletePromises);
+        }
+
+        res.status(200).json({ success: true, message: "Post deleted successfully" });
+
+    } catch (error: any) {
         next(new ErrorHandler(error.message || "Internal server error", 500));
     }
 };

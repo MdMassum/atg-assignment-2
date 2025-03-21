@@ -5,13 +5,26 @@ import { FiX } from "react-icons/fi";
 function PostModal({ setIsOpen, posts, setPosts }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const handleFileChange = (e) => {
+    setImages(e.target.files);
+  };
 
   const handleCreatePost = async () => {
     if (!title.trim() || !content.trim()) {
       setError("Title and content cannot be empty.");
       return;
+    }
+
+    const data = new FormData();
+    data.append("title", title);
+    data.append("content", content);
+
+    for (let image of images) {
+      data.append("images", image);
     }
 
     setLoading(true);
@@ -20,8 +33,8 @@ function PostModal({ setIsOpen, posts, setPosts }) {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/posts/create`,
-        { title, content },
-        { withCredentials: true }
+        data,
+        { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } }
       );
 
       // Add the new post to the existing list
@@ -64,6 +77,13 @@ function PostModal({ setIsOpen, posts, setPosts }) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFileChange}
+          className="w-full p-2 border rounded mb-3 bg-transparent text-gray-700 cursor-pointer"
+        />
         <button
           onClick={handleCreatePost}
           className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
